@@ -1,12 +1,10 @@
 package com.pluralsight;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HomeScreen {
     public static void main(String[] args) {
        Scanner scanner = new Scanner(System.in);
-        ArrayList<Transaction> transactions = new ArrayList<>();
         //homeDisplay();
        LedgerManager ledger = new LedgerManager();
        //ledger.ledgerDisplay();
@@ -19,26 +17,25 @@ public class HomeScreen {
             switch (userInput) {
                 case "D":
                     System.out.println("You chose: Add a deposit");
-                    System.out.println("Enter deposit amount:");
-                    //bufWriter.write(today.format(fmt) + " launch"+ "\n");
+                    ledger.enterDeposit(scanner);
+
                     break;
 
                 case "P":
                     System.out.println("You chose: Make a payment");
-                    //bufWriter.write(today.format(fmt) + " search: " + searchTerm + "\n");
+                    ledger.enterPayment(scanner);
                     break;
 
                 case "L":
                     System.out.println("You chose: Ledger");
-                    //bufWriter.write(today.format(fmt) + " exit" + "\n");
+                    ledger.ledgerDisplay();
                     break;
                 case "X":
                     System.out.println("Exiting");
-                    //bufWriter.write(today.format(fmt) + " exit" + "\n");
                     return;
                 default:
                     System.out.println("Invalid option");
-                    //bufWriter.write(today.format(fmt) + " exit" + "\n");
+
 
             }
 
