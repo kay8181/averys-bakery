@@ -1,5 +1,12 @@
 package com.pluralsight;
 
+
+import java.util.Date;
+import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class LedgerManager {
 
     public LedgerManager() {
@@ -29,6 +36,27 @@ public class LedgerManager {
         System.out.println("1. Start Date\n2. End Date\n3. Description\n4. Vendor\n5. Amounts");
 
     }
+    public static void enterDebit(Scanner scanner) {
+        System.out.println("Enter debit amount:");
+        double amount=scanner.nextDouble();
+        System.out.println("Enter the vendor");
+        String vendor= scanner.nextLine();
+        System.out.println("Enter the description");
+        String description= scanner.nextLine();
+        System.out.println("Enter the time");
+        LocalTime time = LocalTime.now();
+        System.out.println("Enter the date");
+        LocalDate date = LocalDate.now();
+        Transaction t1 = new Transaction(date, time, description, vendor, amount);
+    }
+    public static void enterPayment(Scanner scanner) {
+        System.out.println("Enter the payment amount:");
+        System.out.println("Enter the vendor");
+        System.out.println("Enter the description");
+        System.out.println("Enter the time");
+        System.out.println("Enter the date");
+         scanner.nextLine();
 
+    }
 
 }
