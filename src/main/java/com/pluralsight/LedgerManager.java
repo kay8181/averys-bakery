@@ -11,8 +11,42 @@ public class LedgerManager {
     public LedgerManager() {
         transactions = new ArrayList<>();
     }
+    public void ledgerMenu(Scanner scanner) {
+        String userInput = "";
+        while(!userInput.trim().equalsIgnoreCase("H")) {
+            ledgerDisplay();
+            userInput = scanner.nextLine().trim().toUpperCase();
+            switch (userInput) {
+                case "A":
+                    System.out.println("All:");
+                    allTransactions();
 
-    public void ledgerDisplay() {
+                    break;
+
+                case "D":
+                    System.out.println("Deposits:");
+
+                    break;
+
+                case "P":
+                    System.out.println("Payments:");
+
+                    break;
+                case "R":
+                    System.out.println("Reports:");
+                    break;
+                case "H":
+                    System.out.println("Returning to home screen...");
+                    return;
+                default:
+                    System.out.println("Invalid option. Try again...");
+
+
+            }
+        }
+    }
+
+     public void ledgerDisplay() {
         System.out.println("===========================");
         System.out.println("           Ledger          ");
         System.out.println("===========================");
@@ -76,6 +110,12 @@ public class LedgerManager {
         Transaction t1 = new Transaction(date, time, description, vendor, amount);
         this.transactions.add(t1);
 
+
+    }
+    public void allTransactions() {
+        for(Transaction t: transactions) {
+            System.out.println(t.getAmount() + t.getDescription());
+        }
 
     }
 

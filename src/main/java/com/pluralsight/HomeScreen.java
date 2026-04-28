@@ -16,25 +16,22 @@ public class HomeScreen {
             userInput = scanner.nextLine().trim().toUpperCase();
             switch (userInput) {
                 case "D":
-                    System.out.println("You chose: Add a deposit");
                     ledger.enterDeposit(scanner);
 
                     break;
 
                 case "P":
-                    System.out.println("You chose: Make a payment");
                     ledger.enterPayment(scanner);
                     break;
 
                 case "L":
-                    System.out.println("You chose: Ledger");
-                    ledger.ledgerDisplay();
+                    ledger.ledgerMenu(scanner);
                     break;
                 case "X":
                     System.out.println("Exiting");
                     return;
                 default:
-                    System.out.println("Invalid option");
+                    System.out.println("Invalid option. Try again...");
 
 
             }
