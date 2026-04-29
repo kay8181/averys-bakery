@@ -5,11 +5,7 @@ import java.util.Scanner;
 public class HomeScreen {
     public static void main(String[] args) {
        Scanner scanner = new Scanner(System.in);
-        //homeDisplay();
        LedgerManager ledger = new LedgerManager();
-       //ledger.ledgerDisplay();
-       //ledger.reportsDisplay();
-       //ledger.customSearch();
         String userInput = "";
         while(!userInput.trim().equalsIgnoreCase("X")) {
             homeDisplay();

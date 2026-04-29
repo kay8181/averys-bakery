@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,12 +28,12 @@ public class LedgerManager {
                     break;
                 case "D":
                     System.out.println("Deposits:");
-
+                    depositTransactions();
                     break;
 
                 case "P":
                     System.out.println("Payments:");
-
+                    paymentTransactions();
                     break;
                 case "R":
                     System.out.println("Reports:");
@@ -116,13 +117,44 @@ public class LedgerManager {
     public void allTransactions() {
         DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
         for(Transaction t: transactions) {
             String formattedDate = t.getDate().format(fmtDate);
             String formattedTime = t.getTime().format(fmtTime);
             System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
                    t.getVendor(), t.getAmount());
         }
+    }
+    public void depositTransactions() {
+        DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
+        for(Transaction t: transactions) {
+            if(t.getAmount()>0) {
+                String formattedDate = t.getDate().format(fmtDate);
+                String formattedTime = t.getTime().format(fmtTime);
+                System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
+                        t.getVendor(), t.getAmount());
+            }
 
+        }
+    }
+    public void paymentTransactions() {
+        DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
+        for(Transaction t: transactions) {
+            if(t.getAmount()<0) {
+                String formattedDate = t.getDate().format(fmtDate);
+                String formattedTime = t.getTime().format(fmtTime);
+                System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
+                        t.getVendor(), t.getAmount());
+            }
+
+        }
     }
     public void reportsMenu(Scanner scanner) {
         int userInput=-1;
