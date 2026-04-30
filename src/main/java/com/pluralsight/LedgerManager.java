@@ -4,12 +4,11 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class LedgerManager {
     private ArrayList<Transaction> transactions;
@@ -37,6 +36,7 @@ public class LedgerManager {
                     break;
                 case "R":
                     System.out.println("Reports:");
+                    reportsMenu(scanner);
                     break;
                 case "H":
                     System.out.println("Returning to home screen...");
@@ -196,15 +196,78 @@ public class LedgerManager {
         }
     }
     public void monthToDate() {
+        DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
+        LocalDate date = LocalDate.now();
+        YearMonth currentMonth = YearMonth.from(date);
+        for(Transaction t: transactions) {
+            if(YearMonth.from(t.getDate()).equals(currentMonth)) {
+                String formattedDate = t.getDate().format(fmtDate);
+                String formattedTime = t.getTime().format(fmtTime);
+                System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
+                        t.getVendor(), t.getAmount());
+            }
+
+
+        }
+
+
 
     }
     public void previousMonth() {
+        DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
+        LocalDate date = LocalDate.now();
+        YearMonth currentMonth = YearMonth.from(date);
+        YearMonth previousMonth = currentMonth.minusMonths(1);
+        for(Transaction t: transactions) {
+            if (YearMonth.from(t.getDate()).equals(previousMonth)) {
+                String formattedDate = t.getDate().format(fmtDate);
+                String formattedTime = t.getTime().format(fmtTime);
+                System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
+                        t.getVendor(), t.getAmount());
+            }
+        }
 
     }
     public void yearToDate() {
+        DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
+        LocalDate date = LocalDate.now();
+        Year currentYear = Year.from(date);
+        for(Transaction t: transactions) {
+            if (Year.from(t.getDate()).equals(currentYear)) {
+                String formattedDate = t.getDate().format(fmtDate);
+                String formattedTime = t.getTime().format(fmtTime);
+                System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
+                        t.getVendor(), t.getAmount());
+            }
+        }
 
     }
     public void previousYear() {
+        DateTimeFormatter fmtDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
+        Collections.reverse(transactions);
+        LocalDate date = LocalDate.now();
+        Year currentYear = Year.from(date);
+        Year previousYear = currentYear.minusYears(1);
+        for(Transaction t: transactions) {
+            if (Year.from(t.getDate()).equals(previousYear)) {
+                String formattedDate = t.getDate().format(fmtDate);
+                String formattedTime = t.getTime().format(fmtTime);
+                System.out.printf("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, t.getDescription(),
+                        t.getVendor(), t.getAmount());
+            }
+        }
+
 
     }
     public void searchByVendor(){
