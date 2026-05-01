@@ -27,21 +27,26 @@ public class LedgerManager {
                 case "A":
                     System.out.println("All:");
                     allTransactions();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case "D":
                     System.out.println("Deposits:");
                     depositTransactions();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
 
                 case "P":
                     System.out.println("Payments:");
                     paymentTransactions();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case "R":
                     reportsMenu(scanner);
                     break;
                 case "H":
-                    System.out.println("Returning to home screen...");
                     return;
                 default:
                     System.out.println("Invalid option. Try again...");
@@ -166,24 +171,38 @@ public class LedgerManager {
                 case 1:
                     System.out.println("Month to Date:");
                     monthToDate();
+                    scanner.nextLine();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case 2:
                     System.out.println("Previous Month:");
                     previousMonth();
+                    scanner.nextLine();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case 3:
                     System.out.println("Year to Date:");
                     yearToDate();
+                    scanner.nextLine();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case 4:
                     System.out.println("Previous Year:");
                     previousYear();
+                    scanner.nextLine();
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case 5:
                     System.out.println("===========================");
                     System.out.println("      Search by vendor     ");
                     System.out.println("===========================");
                     searchByVendor(scanner);
+                    System.out.println("Press 0 to go back");
+                    scanner.nextLine();
                     break;
                 case 6:
                     System.out.println("Custom Search:");
