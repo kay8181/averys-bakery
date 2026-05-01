@@ -166,6 +166,8 @@ public class LedgerManager {
                userInput = scanner.nextInt();
            } catch (Exception e){
                scanner.nextLine();
+               userInput = -1;
+
            }
             switch (userInput) {
                 case 1:
