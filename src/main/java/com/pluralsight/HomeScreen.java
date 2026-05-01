@@ -11,7 +11,6 @@ public class HomeScreen {
        Scanner scanner = new Scanner(System.in);
        LedgerManager ledger = new LedgerManager();
         starterScreen();
-        System.out.println("Press H to continue");
         scanner.nextLine();
         String userInput = "";
         while(!userInput.trim().equalsIgnoreCase("X")) {
@@ -71,7 +70,9 @@ public class HomeScreen {
             BufferedReader bufReader = new BufferedReader(reader);
             String line;
             while (true) {
-                if (!((line = bufReader.readLine()) != null)) break;
+                if ((line = bufReader.readLine()) == null){
+                    break;
+                }
                 System.out.println(line);
                 Thread.sleep(150);
             }
