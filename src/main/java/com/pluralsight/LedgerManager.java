@@ -205,8 +205,13 @@ public class LedgerManager {
                     scanner.nextLine();
                     break;
                 case 6:
-                    System.out.println("Custom Search:");
-                    customSearch();
+                    String choice="1";
+                    System.out.println("===========================");
+                    System.out.println("       Custom Search       ");
+                    System.out.println("===========================");
+                        customSearch(scanner);
+                        System.out.println("Press 0 to go back");
+                        scanner.nextLine();
                     break;
                 case 0:
                     scanner.nextLine();
@@ -275,10 +280,110 @@ public class LedgerManager {
         }
 
     }
-    public void customSearch() {
+    public void customSearch(Scanner scanner) {
+        scanner.nextLine();
+        String startDate;
+        String endDate;
+        String description;
+        String vendor;
+        String amount;
+        LocalDate localStartDate = null;
+        LocalDate localEndDate = null;
+        boolean startDateFound;
+        boolean endDateFound;
+        boolean descriptionFound;
+        boolean vendorFound;
+        boolean amountFound=true;
+        System.out.println("Fill in desired search values below");
+        System.out.println("Start date:");
+        startDate = scanner.nextLine();
+        System.out.println("End date:");
+        endDate = scanner.nextLine();
+        if (!startDate.isBlank() && !endDate.isBlank()) {
+            try {
+                localStartDate = LocalDate.parse(startDate);
+                localEndDate = LocalDate.parse(endDate);
+            } catch (Exception e) {
+                System.out.println("Error! Dates are not in the correct format");
+            }
+        }
+        System.out.println("Description:");
+        description = scanner.nextLine();
+        System.out.println("Vendor:");
+        vendor = scanner.nextLine();
+        System.out.println("Amount:");
+        amount = scanner.nextLine();
+
+        sortTransactions(transactions);
+        System.out.println("Results:");
+        for(Transaction t: transactions) {
+            if(localStartDate == null) {
+                startDateFound = true;
+            }
+            else {
+                if(t.getDate().isAfter(localStartDate)) {
+                    startDateFound = true;
+                }
+                else{
+                    startDateFound = false;
+                }
+            }
+            if(localEndDate == null) {
+                endDateFound = true;
+            }
+            else {
+                if(t.getDate().isBefore(localEndDate)) {
+                    endDateFound = true;
+                }
+                else{
+                    endDateFound = false;
+                }
+            }
+            if(description.isBlank()) {
+                descriptionFound = true;
+            }
+            else {
+                if(t.getDescription().equalsIgnoreCase(description)) {
+                    descriptionFound = true;
+                }
+                else{
+                    descriptionFound = false;
+                }
+            }
+            if(vendor.isBlank()) {
+                vendorFound = true;
+            }
+            else {
+                if(t.getVendor().equalsIgnoreCase(vendor)) {
+                    vendorFound = true;
+                }
+                else{
+                    vendorFound = false;
+                }
+            }
+            if(amount.isBlank()) {
+                amountFound = true;
+            }
+            else {
+                try {
+                    double amountvalue = Double.parseDouble(amount);
+
+                    if (t.getAmount() == amountvalue) {
+                        amountFound = true;
+                    } else {
+                        amountFound = false;
+                    }
+                } catch (Exception e){
+                    System.out.println("Error! Amount in wrong format");
+                    amountFound = true;
+                    }
+            }
+            if (startDateFound && endDateFound && descriptionFound && vendorFound && amountFound) {
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
+            }
+        }
 
     }
-
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
