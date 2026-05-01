@@ -65,10 +65,21 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String toString(DateTimeFormatter fmtDate, DateTimeFormatter fmtTime) {
+    public String transactionString(DateTimeFormatter fmtDate, DateTimeFormatter fmtTime) {
         String formattedDate = date.format(fmtDate);
         String formattedTime = time.format(fmtTime);
-        return String.format("%s | %s | %s | %s | $%.2f\n", formattedDate, formattedTime, description,
+        if (amount < 0) {
+            return String.format("%s | %s | Description: %s | Vendor: %s | -$%.2f\n", formattedDate, formattedTime,
+                    description, vendor, amount * -1);
+        } else {
+            return String.format("%s | %s | Description: %s | Vendor: %s | $%.2f\n", formattedDate, formattedTime,
+                    description, vendor, amount);
+        }
+    }
+    public String transactionStringCompacted(DateTimeFormatter fmtDate, DateTimeFormatter fmtTime) {
+        String formattedDate = date.format(fmtDate);
+        String formattedTime = time.format(fmtTime);
+        return String.format("%s|%s|%s|%s|%.2f\n", formattedDate, formattedTime, description,
                 vendor, amount);
     }
 

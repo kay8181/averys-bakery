@@ -1,13 +1,12 @@
 package com.pluralsight;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LedgerManager {
@@ -78,56 +77,70 @@ public class LedgerManager {
     }
     public void enterDeposit(Scanner scanner) {
         System.out.println("Enter deposit amount:");
-        double amount=scanner.nextDouble();
-        while(amount<=0) {
-            System.out.println("Invalid input, deposit must be positive. Try again...");
-            System.out.println("Enter deposit amount:");
-            amount=scanner.nextDouble();
+        try {
+            double amount = scanner.nextDouble();
+            while (amount <= 0) {
+                System.out.println("Invalid input, deposit must be positive. Try again...");
+                System.out.println("Enter deposit amount:");
+                amount = scanner.nextDouble();
+            }
+            System.out.println("Enter the vendor:");
+            scanner.nextLine();
+            String vendor = scanner.nextLine();
+            System.out.println("Enter the description:");
+            String description = scanner.nextLine();
+            LocalTime time = LocalTime.now();
+            LocalDate date = LocalDate.now();
+            System.out.println("Adding deposit...");
+            Transaction t1 = new Transaction(date, time, description, vendor, amount);
+            System.out.println(t1.transactionString(fmtDate,fmtTime));
+            this.transactions.add(t1);
+            appendToCsv("transactions.csv", t1);
         }
-        System.out.println("Enter the vendor");
-        scanner.nextLine();
-        String vendor= scanner.nextLine();
-        System.out.println("Enter the description");
-        String description= scanner.nextLine();
-        LocalTime time = LocalTime.now();
-        LocalDate date = LocalDate.now();
-        System.out.println("Adding deposit...");
-        Transaction t1 = new Transaction(date, time, description, vendor, amount);
-        this.transactions.add(t1);
+        catch (Exception e) {
+            scanner.nextLine();
+            System.out.println("Error! Try again...");
+        }
 
     }
     public void enterPayment(Scanner scanner) {
         System.out.println("Enter payment amount:");
-        double amount=scanner.nextDouble();
-        while(amount>=0) {
-            System.out.println("Invalid input, payment must be negative. Try again...");
-            System.out.println("Enter payment amount:");
-            amount = scanner.nextDouble();
+        try {
+            double amount = scanner.nextDouble();
+            while (amount >= 0) {
+                System.out.println("Invalid input, payment must be negative. Try again...");
+                System.out.println("Enter payment amount:");
+                amount = scanner.nextDouble();
+            }
+            System.out.println("Enter the vendor:");
+            scanner.nextLine();
+            String vendor = scanner.nextLine();
+            System.out.println("Enter the description:");
+            String description = scanner.nextLine();
+            LocalTime time = LocalTime.now();
+            LocalDate date = LocalDate.now();
+            System.out.println("Adding payment...");
+            Transaction t1 = new Transaction(date, time, description, vendor, amount);
+            System.out.println(t1.transactionString(fmtDate,fmtTime));
+            this.transactions.add(t1);
+            appendToCsv("transactions.csv", t1);
+
+        } catch (Exception e) {
+            scanner.nextLine();
+            System.out.println("Error! Try again...");
         }
-        System.out.println("Enter the vendor");
-        scanner.nextLine();
-        String vendor= scanner.nextLine();
-        System.out.println("Enter the description");
-        String description= scanner.nextLine();
-        LocalTime time = LocalTime.now();
-        LocalDate date = LocalDate.now();
-        System.out.println("Adding payment...");
-        Transaction t1 = new Transaction(date, time, description, vendor, amount);
-        this.transactions.add(t1);
-
-
     }
     public void allTransactions() {
         sortTransactions(transactions);
         for(Transaction t: transactions) {
-            System.out.printf(t.toString(fmtDate, fmtTime));
+            System.out.printf(t.transactionString(fmtDate, fmtTime));
         }
     }
     public void depositTransactions() {
         sortTransactions(transactions);
         for(Transaction t: transactions) {
             if(t.getAmount()>0) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
         }
     }
@@ -135,7 +148,7 @@ public class LedgerManager {
         sortTransactions(transactions);
         for(Transaction t: transactions) {
             if(t.getAmount()<0) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
 
         }
@@ -144,7 +157,11 @@ public class LedgerManager {
         int userInput=-1;
         while(userInput!=0) {
            reportsDisplay();
-            userInput = scanner.nextInt();
+           try {
+               userInput = scanner.nextInt();
+           } catch (Exception e){
+               scanner.nextLine();
+           }
             switch (userInput) {
                 case 1:
                     System.out.println("Month to Date:");
@@ -187,7 +204,7 @@ public class LedgerManager {
         YearMonth currentMonth = YearMonth.from(date);
         for(Transaction t: transactions) {
             if(YearMonth.from(t.getDate()).equals(currentMonth)) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
         }
 
@@ -199,7 +216,7 @@ public class LedgerManager {
         YearMonth previousMonth = currentMonth.minusMonths(1);
         for(Transaction t: transactions) {
             if (YearMonth.from(t.getDate()).equals(previousMonth)) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
         }
 
@@ -210,7 +227,7 @@ public class LedgerManager {
         Year currentYear = Year.from(date);
         for(Transaction t: transactions) {
             if (Year.from(t.getDate()).equals(currentYear)) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
         }
 
@@ -222,7 +239,7 @@ public class LedgerManager {
         Year previousYear = currentYear.minusYears(1);
         for(Transaction t: transactions) {
             if (Year.from(t.getDate()).equals(previousYear)) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
         }
 
@@ -234,7 +251,7 @@ public class LedgerManager {
         sortTransactions(transactions);
         for(Transaction t: transactions) {
             if (t.getVendor().equalsIgnoreCase(userInput)) {
-                System.out.printf(t.toString(fmtDate, fmtTime));
+                System.out.printf(t.transactionString(fmtDate, fmtTime));
             }
         }
 
@@ -273,8 +290,21 @@ public class LedgerManager {
         return transactions;
 
     }
+    public void appendToCsv(String fileName, Transaction entry) {
+        try {
+            FileWriter fileWriter = new FileWriter(fileName, true);
+            BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+            bufWriter.append(entry.transactionStringCompacted(fmtDate, fmtTime));
+            bufWriter.close();
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void sortTransactions(ArrayList<Transaction> transactions) {
         transactions.sort((o1, o2) -> o1.getDateTime().compareTo(o2.getDateTime()));
         Collections.reverse(transactions);
     }
+
 }

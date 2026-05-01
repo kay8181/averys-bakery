@@ -18,20 +18,20 @@ public class HomeScreen {
 
                 case "P":
                     ledger.enterPayment(scanner);
+
                     break;
 
                 case "L":
                     ledger.ledgerMenu(scanner);
                     break;
                 case "X":
-                    System.out.println("Exiting");
+                    System.out.println("Exiting...");
+                    System.out.println("Goodbye!");
                     return;
                 default:
                     System.out.println("Invalid option. Try again...");
 
-
             }
-
         }
 
     }
