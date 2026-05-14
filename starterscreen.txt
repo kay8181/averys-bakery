@@ -13,7 +13,7 @@
      //                                    \\
     //                                      \\
     ||WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW||
-    ||                                      ||
+    ||                                       ||
      ||             Welcome to              ||
       ||          Avery's Bakery           ||
        ||                                 ||

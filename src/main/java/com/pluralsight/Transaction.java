@@ -64,7 +64,7 @@ public class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
+    //print to screen
     public String transactionString(DateTimeFormatter fmtDate, DateTimeFormatter fmtTime) {
         String formattedDate = date.format(fmtDate);
         String formattedTime = time.format(fmtTime);
@@ -76,6 +76,7 @@ public class Transaction {
                     description, vendor, amount);
         }
     }
+    // print to csv file
     public String transactionStringCompacted(DateTimeFormatter fmtDate, DateTimeFormatter fmtTime) {
         String formattedDate = date.format(fmtDate);
         String formattedTime = time.format(fmtTime);

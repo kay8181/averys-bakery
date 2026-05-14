@@ -166,6 +166,8 @@ public class LedgerManager {
                userInput = scanner.nextInt();
            } catch (Exception e){
                scanner.nextLine();
+               userInput = -1;
+
            }
             switch (userInput) {
                 case 1:
@@ -293,7 +295,7 @@ public class LedgerManager {
         boolean endDateFound;
         boolean descriptionFound;
         boolean vendorFound;
-        boolean amountFound=true;
+        boolean amountFound;
         System.out.println("Fill in desired search values below");
         System.out.println("Start date:");
         startDate = scanner.nextLine();
